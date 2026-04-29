@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }) {
                 <p>© 2026 GENzAI. All rights reserved.</p>
               </div>
             </footer>
+            <ScrollToTop />
           </ThemeProvider>
         </body>
       </html>
