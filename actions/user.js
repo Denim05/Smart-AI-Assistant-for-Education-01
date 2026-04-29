@@ -61,22 +61,31 @@ export async function getUserOnboardingStatus() {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
 
-  const user = await db.user.findUnique({
+  let user = await db.user.findUnique({
     where: { clerkUserId: userId },
+    select: {
+      industry: true,
+    },
   });
 
-  if (!user) throw new Error("User not found");
-
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        clerkUserId: userId,
-      },
+  if (!user) {
+    // If not found, they might have just signed up and the DB isn't synced yet.
+    // Call checkUser to force sync.
+    const { checkUser } = await import("@/lib/checkUser");
+    await checkUser();
+    
+    // Try again
+    user = await db.user.findUnique({
+      where: { clerkUserId: userId },
       select: {
         industry: true,
       },
     });
+  }
 
+  if (!user) throw new Error("User not found in database even after sync");
+
+  try {
     return {
       isOnboarded: !!user?.industry,
     };
