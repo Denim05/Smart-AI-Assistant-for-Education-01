@@ -10,6 +10,7 @@ import {
   Target,
   Linkedin,
   Map,
+  Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
@@ -98,6 +99,12 @@ export default async function Header() {
                   <Link href="/career-roadmap" className="flex items-center gap-2">
                     <Map className="h-4 w-4" />
                     Career Roadmap
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/jobs" className="flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" />
+                    Job Board
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
