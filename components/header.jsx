@@ -7,6 +7,9 @@ import {
   GraduationCap,
   ChevronDown,
   StarsIcon,
+  Target,
+  Linkedin,
+  Map,
 } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
@@ -60,7 +63,7 @@ export default async function Header() {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-56">
                 <DropdownMenuItem asChild>
                   <Link href="/resume" className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
@@ -68,10 +71,7 @@ export default async function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link
-                    href="/ai-cover-letter"
-                    className="flex items-center gap-2"
-                  >
+                  <Link href="/ai-cover-letter" className="flex items-center gap-2">
                     <PenBox className="h-4 w-4" />
                     Cover Letter
                   </Link>
@@ -80,6 +80,24 @@ export default async function Header() {
                   <Link href="/interview" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     Interview Prep
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/ats-scorer" className="flex items-center gap-2">
+                    <Target className="h-4 w-4" />
+                    ATS Scorer
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/linkedin-optimizer" className="flex items-center gap-2">
+                    <Linkedin className="h-4 w-4" />
+                    LinkedIn Optimizer
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/career-roadmap" className="flex items-center gap-2">
+                    <Map className="h-4 w-4" />
+                    Career Roadmap
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
