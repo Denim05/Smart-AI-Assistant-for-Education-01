@@ -34,9 +34,9 @@ export default async function Header() {
           <Image
             src={"/logo.png"}
             alt="GENzAI Logo"
-            width={200}
-            height={60}
-            className="h-12 py-1 w-auto object-contain"
+            width={150}
+            height={150}
+            className="h-16 w-auto object-contain"
           />
         </Link>
 
