@@ -23,6 +23,9 @@ export async function GET(req) {
     const url = `https://api.adzuna.com/v1/api/jobs/in/search/${page}?app_id=${appId}&app_key=${appKey}&what=${encodeURIComponent(query)}&where=${encodeURIComponent(location)}&results_per_page=12&content-type=application/json`;
 
     const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Adzuna API Error: ${res.statusText}`);
+    }
     const data = await res.json();
 
     const jobs = (data.results || []).map((job) => ({

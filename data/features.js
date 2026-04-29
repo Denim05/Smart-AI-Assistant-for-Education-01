@@ -1,45 +1,66 @@
-import { BrainCircuit, Briefcase, LineChart, ScrollText, Target, Linkedin, Map } from "lucide-react";
-
 export const features = [
   {
-    icon: <BrainCircuit className="w-10 h-10 mb-4 text-primary" />,
-    title: "AI-Powered Career Guidance",
-    description: "Get personalized career advice and industry insights powered by Google Gemini AI.",
-  },
-  {
-    icon: <Briefcase className="w-10 h-10 mb-4 text-primary" />,
-    title: "Interview Preparation",
-    description: "Practice with role-specific questions and get instant AI feedback to improve your performance.",
-  },
-  {
-    icon: <LineChart className="w-10 h-10 mb-4 text-primary" />,
-    title: "Industry Insights",
-    description: "Stay ahead with real-time industry trends, salary data, and market analysis updated weekly.",
-  },
-  {
-    icon: <ScrollText className="w-10 h-10 mb-4 text-primary" />,
-    title: "Smart Resume Builder",
-    description: "Generate ATS-optimized resumes tailored to your target job description with AI assistance.",
-  },
-  {
-    icon: <Target className="w-10 h-10 mb-4 text-primary" />,
+    icon: "Target",
     title: "ATS Resume Scorer",
-    description: "Upload your resume and get a detailed ATS compatibility score with missing keywords and actionable improvements.",
+    description:
+      "Paste your resume + a job description. Get an instant ATS compatibility score across keywords, formatting, experience, and skills — with the exact missing keywords listed.",
+    badge: "Most Used",
+    href: "/ats-scorer",
   },
   {
-    icon: <Linkedin className="w-10 h-10 mb-4 text-primary" />,
+    icon: "BrainCircuit",
+    title: "AI Interview Prep",
+    description:
+      "Generate role-specific technical and behavioural questions. Practice answers and get instant AI feedback. Tracks your score per session so you see real improvement.",
+    badge: null,
+    href: "/interview",
+  },
+  {
+    icon: "LineChart",
+    title: "Industry Intelligence",
+    description:
+      "Real salary ranges, demand levels, and trending skills for your specific industry — auto-refreshed weekly from live market data. Know what to negotiate before you walk in.",
+    badge: null,
+    href: "/dashboard",
+  },
+  {
+    icon: "ScrollText",
+    title: "Smart Resume Builder",
+    description:
+      "Build a professional resume with a guided form. AI rewrites every bullet point to be quantified and impact-driven. Export as Markdown or PDF-ready format.",
+    badge: null,
+    href: "/resume",
+  },
+  {
+    icon: "Linkedin",
     title: "LinkedIn Optimizer",
-    description: "Get AI-crafted headlines, About sections, and keyword tips that attract top recruiters.",
+    description:
+      "Get 3 AI-crafted headline options and a full About section rewrite — loaded with the exact keywords recruiters search for in your target role.",
+    badge: null,
+    href: "/linkedin-optimizer",
   },
   {
-    icon: <Map className="w-10 h-10 mb-4 text-primary" />,
+    icon: "Map",
     title: "Career Roadmap",
-    description: "Generate a personalized month-by-month learning plan with skills, projects, and resources to reach your dream role.",
+    description:
+      "Tell us where you are and where you want to be. Get a month-by-month action plan: exact skills to learn, projects to build, resources to use, and salary benchmarks.",
+    badge: null,
+    href: "/career-roadmap",
   },
   {
-    icon: <Briefcase className="w-10 h-10 mb-4 text-primary" />,
+    icon: "Briefcase",
     title: "Live Job Board",
-    description: "Discover thousands of live job opportunities across India filtered by your role and location.",
+    description:
+      "Browse live job openings sourced from real job APIs, filtered by role and location. No duplicate listings, no noise.",
+    badge: "Live",
+    href: "/jobs",
+  },
+  {
+    icon: "Trophy",
+    title: "AI Cover Letter",
+    description:
+      "Generate a tailored cover letter in under 30 seconds. AI reads your background and the job description to craft something specific — not a generic template.",
+    badge: null,
+    href: "/ai-cover-letter",
   },
 ];
-

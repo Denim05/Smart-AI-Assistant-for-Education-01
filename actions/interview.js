@@ -47,8 +47,11 @@ export async function generateQuiz() {
     const result = await model.generateContent(prompt);
     const response = result.response;
     const text = response.text();
-    const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
-    const quiz = JSON.parse(cleanedText);
+    
+    const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+    if (!match) throw new Error("Failed to parse JSON from AI response");
+    
+    const quiz = JSON.parse(match[0]);
 
     return quiz.questions;
   } catch (error) {

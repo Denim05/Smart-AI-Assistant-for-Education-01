@@ -1,135 +1,176 @@
 import React from "react";
 import { Button } from "./ui/button";
 import {
-  PenBox,
-  LayoutDashboard,
-  FileText,
-  GraduationCap,
-  ChevronDown,
-  StarsIcon,
-  Target,
-  Linkedin,
-  Map,
-  Briefcase,
+  PenBox, LayoutDashboard, FileText, GraduationCap,
+  ChevronDown, StarsIcon, Target, Linkedin, Map, Briefcase,
 } from "lucide-react";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenu, DropdownMenuContent,
+  DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 import { ThemeToggle } from "./theme-toggle";
+import Logo from "./logo";
+import { Badge } from "./ui/badge";
+
+const growthTools = [
+  {
+    href: "/ats-scorer",
+    icon: <Target className="h-4 w-4 text-primary" />,
+    label: "ATS Resume Scorer",
+    desc: "Score your resume instantly",
+    badge: "Popular",
+  },
+  {
+    href: "/linkedin-optimizer",
+    icon: <Linkedin className="h-4 w-4 text-blue-500" />,
+    label: "LinkedIn Optimizer",
+    desc: "Get 3x more recruiter views",
+    badge: null,
+  },
+  {
+    href: "/career-roadmap",
+    icon: <Map className="h-4 w-4 text-purple-500" />,
+    label: "Career Roadmap",
+    desc: "Month-by-month action plan",
+    badge: null,
+  },
+  {
+    href: "/resume",
+    icon: <FileText className="h-4 w-4 text-green-500" />,
+    label: "Resume Builder",
+    desc: "AI-optimized, ATS-ready",
+    badge: null,
+  },
+  {
+    href: "/ai-cover-letter",
+    icon: <PenBox className="h-4 w-4 text-orange-500" />,
+    label: "Cover Letter AI",
+    desc: "Tailored in 30 seconds",
+    badge: null,
+  },
+  {
+    href: "/interview",
+    icon: <GraduationCap className="h-4 w-4 text-yellow-500" />,
+    label: "Interview Prep",
+    desc: "Real questions from top companies",
+    badge: null,
+  },
+  {
+    href: "/jobs",
+    icon: <Briefcase className="h-4 w-4 text-pink-500" />,
+    label: "Job Board",
+    desc: "Live openings across India",
+    badge: "Live",
+  },
+];
 
 export default async function Header() {
   await checkUser();
 
   return (
-    <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
-      <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/">
-          <Image
-            src={"/logo.png"}
-            alt="GENzAI Logo"
-            width={150}
-            height={150}
-            className="h-16 w-auto object-contain"
-          />
+    <header className="fixed top-0 w-full z-50 border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60">
+      <nav className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <Logo className="h-14 w-auto" />
         </Link>
 
-        {/* Action Buttons */}
-        <div className="flex items-center space-x-2 md:space-x-4">
+        {/* Desktop Nav Links */}
+        <div className="hidden lg:flex items-center gap-1 text-sm font-medium">
+          <Link
+            href="/jobs"
+            className="px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors flex items-center gap-1.5"
+          >
+            <Briefcase className="w-3.5 h-3.5" />
+            Jobs
+          </Link>
+          <Link
+            href="/interview"
+            className="px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+          >
+            Interview Prep
+          </Link>
+        </div>
+
+        {/* Action Area */}
+        <div className="flex items-center gap-2">
           <SignedIn>
-            <Link href="/dashboard">
-              <Button
-                variant="outline"
-                className="hidden md:inline-flex items-center gap-2"
-              >
+            {/* Dashboard Link */}
+            <Link href="/dashboard" className="hidden sm:flex">
+              <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
                 <LayoutDashboard className="h-4 w-4" />
-                Industry Insights
-              </Button>
-              <Button variant="ghost" className="md:hidden w-10 h-10 p-0">
-                <LayoutDashboard className="h-4 w-4" />
+                <span className="hidden md:inline">Dashboard</span>
               </Button>
             </Link>
 
             {/* Growth Tools Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="flex items-center gap-2">
+                <Button size="sm" className="gap-2 shadow-sm shadow-primary/20">
                   <StarsIcon className="h-4 w-4" />
-                  <span className="hidden md:block">Growth Tools</span>
-                  <ChevronDown className="h-4 w-4" />
+                  <span className="hidden sm:inline">Tools</span>
+                  <ChevronDown className="h-3 w-3 opacity-70" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem asChild>
-                  <Link href="/resume" className="flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    Build Resume
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/ai-cover-letter" className="flex items-center gap-2">
-                    <PenBox className="h-4 w-4" />
-                    Cover Letter
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/interview" className="flex items-center gap-2">
-                    <GraduationCap className="h-4 w-4" />
-                    Interview Prep
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/ats-scorer" className="flex items-center gap-2">
-                    <Target className="h-4 w-4" />
-                    ATS Scorer
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/linkedin-optimizer" className="flex items-center gap-2">
-                    <Linkedin className="h-4 w-4" />
-                    LinkedIn Optimizer
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/career-roadmap" className="flex items-center gap-2">
-                    <Map className="h-4 w-4" />
-                    Career Roadmap
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/jobs" className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" />
-                    Job Board
-                  </Link>
-                </DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-72 p-2">
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal mb-1 px-2">
+                  AI Career Tools
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="mb-2" />
+                {growthTools.map((tool) => (
+                  <DropdownMenuItem key={tool.href} asChild className="p-0 focus:bg-transparent">
+                    <Link
+                      href={tool.href}
+                      className="flex items-center gap-3 px-2 py-2.5 rounded-lg hover:bg-muted cursor-pointer transition-colors w-full"
+                    >
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                        {tool.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium">{tool.label}</span>
+                          {tool.badge && (
+                            <Badge className="text-[10px] h-4 px-1.5 py-0 bg-primary/20 text-primary border-0">
+                              {tool.badge}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground truncate">{tool.desc}</p>
+                      </div>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
-          </SignedIn>
 
-          <SignedOut>
-            <SignInButton>
-              <Button variant="outline">Sign In</Button>
-            </SignInButton>
-          </SignedOut>
-
-          <SignedIn>
+            {/* User Avatar */}
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
-                  userButtonPopoverCard: "shadow-xl",
+                  avatarBox: "w-8 h-8 ring-2 ring-primary/20",
+                  userButtonPopoverCard: "shadow-2xl",
                   userPreviewMainIdentifier: "font-semibold",
                 },
               }}
               afterSignOutUrl="/"
             />
           </SignedIn>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <Button variant="outline" size="sm">
+                Sign In
+              </Button>
+            </SignInButton>
+            <Link href="/sign-up" className="hidden sm:flex">
+              <Button size="sm" className="shadow-sm shadow-primary/20">
+                Get Started Free
+              </Button>
+            </Link>
+          </SignedOut>
 
           <ThemeToggle />
         </div>

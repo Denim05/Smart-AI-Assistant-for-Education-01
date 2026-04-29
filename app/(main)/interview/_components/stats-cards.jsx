@@ -1,4 +1,4 @@
-import { Brain, Target, Trophy } from "lucide-react";
+import { Brain, Target, Trophy, TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function StatsCards({ assessments }) {
@@ -24,44 +24,53 @@ export default function StatsCards({ assessments }) {
     );
   };
 
+  const avgScore = getAverageScore();
+  const scoreColor = avgScore > 75 ? "text-emerald-500" : avgScore > 50 ? "text-yellow-500" : "text-primary";
+
   return (
-    <div className="grid gap-4 md:grid-cols-3">
-      <Card>
+    <div className="grid gap-5 md:grid-cols-3 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <Card className="border-2 hover:border-primary/40 transition-colors shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Average Score</CardTitle>
-          <Trophy className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-bold text-muted-foreground">Overall Mastery</CardTitle>
+          <div className="p-2 bg-emerald-500/10 rounded-xl">
+            <Trophy className="h-5 w-5 text-emerald-500" />
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{getAverageScore()}%</div>
-          <p className="text-xs text-muted-foreground">
-            Across all assessments
+          <div className={\`text-4xl font-black \${scoreColor}\`}>{avgScore}%</div>
+          <p className="text-xs text-muted-foreground mt-1 font-medium">
+            Average across all sessions
           </p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-2 hover:border-primary/40 transition-colors shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Questions Practiced
+          <CardTitle className="text-sm font-bold text-muted-foreground">
+            Questions Handled
           </CardTitle>
-          <Brain className="h-4 w-4 text-muted-foreground" />
+          <div className="p-2 bg-blue-500/10 rounded-xl">
+            <Brain className="h-5 w-5 text-blue-500" />
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{getTotalQuestions()}</div>
-          <p className="text-xs text-muted-foreground">Total questions</p>
+          <div className="text-4xl font-black">{getTotalQuestions()}</div>
+          <p className="text-xs text-muted-foreground mt-1 font-medium">Unique scenarios practiced</p>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border-2 hover:border-primary/40 transition-colors shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Latest Score</CardTitle>
-          <Target className="h-4 w-4 text-muted-foreground" />
+          <CardTitle className="text-sm font-bold text-muted-foreground">Latest Readiness</CardTitle>
+          <div className="p-2 bg-primary/10 rounded-xl">
+            <Target className="h-5 w-5 text-primary" />
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">
+          <div className="text-4xl font-black text-primary">
             {getLatestAssessment()?.quizScore.toFixed(1) || 0}%
           </div>
-          <p className="text-xs text-muted-foreground">Most recent quiz</p>
+          <p className="text-xs text-muted-foreground mt-1 font-medium">Score from most recent quiz</p>
         </CardContent>
       </Card>
     </div>
