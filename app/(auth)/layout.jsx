@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Logo from "@/components/logo";
 
 export default function AuthLayout({ children }) {
   return (
@@ -8,14 +9,8 @@ export default function AuthLayout({ children }) {
         {/* Background Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
 
-        <div className="relative z-10 text-center space-y-6">
-          <Image
-            src="/logo.png"
-            alt="GENzAI Logo"
-            width={250}
-            height={250}
-            className="mx-auto drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-          />
+        <div className="relative z-10 text-center space-y-6 w-full">
+          <Logo className="h-48 w-auto mx-auto" />
           <h1 className="text-4xl font-extrabold text-white tracking-tight">
             Accelerate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500">Tech Career</span>
           </h1>
@@ -33,7 +28,7 @@ export default function AuthLayout({ children }) {
       {/* Right Side - Clerk Auth Forms */}
       <div className="flex items-center justify-center p-8 bg-background relative">
         <div className="absolute top-8 left-8 md:hidden">
-          <Image src="/logo.png" alt="GENzAI Logo" width={100} height={100} />
+          <Logo className="h-16 w-auto" />
         </div>
         <div className="w-full max-w-md">
           {children}

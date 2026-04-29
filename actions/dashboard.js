@@ -31,9 +31,12 @@ export const generateAIInsights = async (industry) => {
   const result = await model.generateContent(prompt);
   const response = result.response;
   const text = response.text();
-  const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
-
-  return JSON.parse(cleanedText);
+  
+  // Robust JSON parsing
+  const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
+  if (!match) throw new Error("Failed to parse JSON from AI response");
+  
+  return JSON.parse(match[0]);
 };
 
 export async function getIndustryInsights() {
