@@ -60,7 +60,7 @@ export default function QuizList({ assessments }) {
                   onClick={() => setSelectedQuiz(assessment)}
                 >
                   <div className="flex items-start gap-4">
-                    <div className={\`shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-black text-sm \${scoreBg} \${scoreColor} border \${scoreBorder}\`}>
+                    <div className={`shrink-0 w-12 h-12 rounded-full flex items-center justify-center font-black text-sm ${scoreBg} ${scoreColor} border ${scoreBorder}`}>
                       {assessment.quizScore.toFixed(0)}%
                     </div>
                     <div>

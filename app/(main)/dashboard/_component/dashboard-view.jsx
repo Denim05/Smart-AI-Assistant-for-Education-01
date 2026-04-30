@@ -78,8 +78,8 @@ const DashboardView = ({ insights }) => {
         <Card className="border hover:border-primary/40 transition-colors shadow-sm group">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-muted-foreground">Market Outlook</CardTitle>
-            <div className={\`p-2 rounded-lg \${outlookStyle.bg}\`}>
-              <OutlookIcon className={\`h-5 w-5 \${outlookStyle.color}\`} />
+            <div className={`p-2 rounded-lg ${outlookStyle.bg}`}>
+              <OutlookIcon className={`h-5 w-5 ${outlookStyle.color}`} />
             </div>
           </CardHeader>
           <CardContent>
@@ -103,16 +103,16 @@ const DashboardView = ({ insights }) => {
           </CardContent>
         </Card>
 
-        <Card className={\`border hover:\${demandStyle.border} transition-colors shadow-sm group\`}>
+        <Card className={`border hover:${demandStyle.border} transition-colors shadow-sm group`}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-semibold text-muted-foreground">Hiring Demand</CardTitle>
-            <div className={\`p-2 rounded-lg bg-opacity-10 \${demandStyle.bg.replace("bg-", "bg-opacity-10 ")}\`}>
-              <BriefcaseIcon className={\`h-5 w-5 \${demandStyle.color}\`} />
+            <div className={`p-2 rounded-lg bg-opacity-10 ${demandStyle.bg.replace("bg-", "bg-opacity-10 ")}`}>
+              <BriefcaseIcon className={`h-5 w-5 ${demandStyle.color}`} />
             </div>
           </CardHeader>
           <CardContent>
-            <div className={\`text-3xl font-black capitalize \${demandStyle.color}\`}>{insights.demandLevel}</div>
-            <div className={\`h-1.5 w-full rounded-full mt-3 \${demandStyle.bg}\`} />
+            <div className={`text-3xl font-black capitalize ${demandStyle.color}`}>{insights.demandLevel}</div>
+            <div className={`h-1.5 w-full rounded-full mt-3 ${demandStyle.bg}`} />
           </CardContent>
         </Card>
 
@@ -164,7 +164,7 @@ const DashboardView = ({ insights }) => {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12 }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} dx={-10} tickFormatter={(val) => \`\${val}k\`} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12 }} dx={-10} tickFormatter={(val) => `${val}k`} />
                   <Tooltip
                     cursor={{ stroke: 'hsl(var(--primary))', strokeWidth: 1, strokeDasharray: '4 4' }}
                     content={({ active, payload, label }) => {
