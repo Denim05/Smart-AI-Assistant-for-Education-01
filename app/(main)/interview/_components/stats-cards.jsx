@@ -37,7 +37,7 @@ export default function StatsCards({ assessments }) {
           </div>
         </CardHeader>
         <CardContent>
-          <div className={\`text-4xl font-black \${scoreColor}\`}>{avgScore}%</div>
+          <div className={`text-4xl font-black ${scoreColor}`}>{avgScore}%</div>
           <p className="text-xs text-muted-foreground mt-1 font-medium">
             Average across all sessions
           </p>
