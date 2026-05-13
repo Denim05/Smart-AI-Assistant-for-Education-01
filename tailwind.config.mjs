@@ -8,6 +8,10 @@ export default {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif'],
+  			grotesk: ['Space Grotesk', 'sans-serif'],
+  		},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

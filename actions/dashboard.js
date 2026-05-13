@@ -2,10 +2,7 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+import { generateWithFallback, extractJSON } from "@/lib/gemini";
 
 export const generateAIInsights = async (industry) => {
   const prompt = `
@@ -28,15 +25,8 @@ export const generateAIInsights = async (industry) => {
           Include at least 5 skills and trends.
         `;
 
-  const result = await model.generateContent(prompt);
-  const response = result.response;
-  const text = response.text();
-  
-  // Robust JSON parsing
-  const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-  if (!match) throw new Error("Failed to parse JSON from AI response");
-  
-  return JSON.parse(match[0]);
+  const text = await generateWithFallback(prompt);
+  return extractJSON(text);
 };
 
 export async function getIndustryInsights() {

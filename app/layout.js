@@ -1,6 +1,4 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
@@ -10,9 +8,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { ScrollToTop } from "@/components/scroll-to-top";
 
-const inter = Inter({ subsets: ["latin"] });
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzai.vercel.app";
 
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "GENzAI — AI Career Coach for Gen Z Professionals",
     template: "%s | GENzAI",
@@ -29,17 +28,17 @@ export const metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://genzai.in",
+    url: SITE_URL,
     siteName: "GENzAI",
     title: "GENzAI — AI Career Coach for Gen Z",
     description: "Stop applying blindly. Start landing offers with AI-powered career tools.",
-    images: [{ url: "/banner.jpeg", width: 1280, height: 720, alt: "GENzAI Platform" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "GENzAI Platform" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "GENzAI — AI Career Coach for Gen Z",
     description: "ATS scoring, LinkedIn optimizer, career roadmaps and more.",
-    images: ["/banner.jpeg"],
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
   icons: { icon: "/logo.svg", apple: "/logo.png" },
@@ -50,7 +49,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body className={`${inter.className} antialiased`}>
+        <body className="antialiased">
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

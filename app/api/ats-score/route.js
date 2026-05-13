@@ -1,19 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+import { generateWithFallback, extractJSON } from "@/lib/gemini";
 
 export async function POST(req) {
   const { userId } = await auth();
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    const { resumeText, jobDescription } = await req.json();
+    let resumeText = "";
+    let jobDescription = "";
+
+    const contentType = req.headers.get("content-type") || "";
+    
+    if (contentType.includes("application/json")) {
+      const body = await req.json();
+      resumeText = body.resumeText;
+      jobDescription = body.jobDescription;
+    } else if (contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+      const file = formData.get("resume");
+      jobDescription = formData.get("jobDescription") || "";
+      
+      if (file && file instanceof File) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const { parsePDF } = await import("@/lib/pdf-parser-v2");
+        resumeText = await parsePDF(buffer);
+      }
+    }
 
     if (!resumeText) {
-      return NextResponse.json({ error: "Resume text is required" }, { status: 400 });
+      return NextResponse.json({ error: "Resume content is required (paste text or upload PDF)" }, { status: 400 });
     }
 
     const prompt = `
@@ -48,13 +64,9 @@ Return ONLY a valid JSON object in this exact format. Do NOT wrap it in markdown
 }
 `;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-    if (!match) throw new Error("Failed to parse JSON from AI response");
-    const analysis = JSON.parse(match[0]);
-
-    return NextResponse.json({ success: true, analysis });
+    const text = await generateWithFallback(prompt);
+    const data = extractJSON(text);
+    return NextResponse.json({ success: true, analysis: data });
   } catch (error) {
     console.error("ATS analysis error:", error);
     return NextResponse.json({ error: "Failed to analyze resume" }, { status: 500 });
