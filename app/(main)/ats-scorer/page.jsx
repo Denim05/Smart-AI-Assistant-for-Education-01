@@ -49,24 +49,38 @@ export default function ATSScorerPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
   const resultsRef = useRef(null);
 
   const getTier = (score) => SCORE_TIERS.find((t) => score >= t.min) || SCORE_TIERS[3];
 
   const handleAnalyze = async () => {
-    if (!resumeText.trim()) {
-      setError("Please paste your resume text to analyze.");
+    if (!resumeText.trim() && !file) {
+      setError("Please paste your resume text or upload a PDF file.");
       return;
     }
     setError("");
     setLoading(true);
     setResult(null);
     try {
-      const res = await fetch("/api/ats-score", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resumeText, jobDescription }),
-      });
+      let res;
+      if (file) {
+        const formData = new FormData();
+        formData.append("resume", file);
+        formData.append("jobDescription", jobDescription);
+        res = await fetch("/api/ats-score", {
+          method: "POST",
+          body: formData,
+        });
+      } else {
+        res = await fetch("/api/ats-score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resumeText, jobDescription }),
+        });
+      }
+      
       const data = await res.json();
       if (data.success) {
         setResult(data.analysis);
@@ -118,24 +132,83 @@ export default function ATSScorerPage() {
             <Card className="border-2 hover:border-primary/40 transition-colors">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Upload className="w-4 h-4" />
+                  <FileText className="w-4 h-4" />
                   Your Resume
                   <span className="ml-auto text-xs text-muted-foreground font-normal">*Required</span>
                 </CardTitle>
-                <CardDescription>Paste the plain text of your resume</CardDescription>
+                <CardDescription>Upload PDF or paste text</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-4">
+                {/* File Upload Zone */}
+                <div 
+                  className={`border-2 border-dashed rounded-xl p-6 text-center transition-all cursor-pointer ${file ? "border-primary bg-primary/5" : "border-muted-foreground/20 hover:border-primary/50 hover:bg-muted/30"}`}
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const droppedFile = e.dataTransfer.files[0];
+                    if (droppedFile?.type === "application/pdf") {
+                      setFile(droppedFile);
+                      setResumeText("");
+                      toast.success(`Resume "${droppedFile.name}" selected`);
+                    } else {
+                      toast.error("Please upload a PDF file.");
+                    }
+                  }}
+                >
+                  <input 
+                    type="file" 
+                    accept=".pdf" 
+                    className="hidden" 
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files[0];
+                      if (selectedFile) {
+                        setFile(selectedFile);
+                        setResumeText("");
+                        toast.success(`Resume "${selectedFile.name}" selected`);
+                      }
+                    }}
+                  />
+                  {file ? (
+                    <div className="space-y-2">
+                      <div className="mx-auto w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-sm font-bold truncate max-w-[200px] mx-auto">{file.name}</div>
+                      <Button variant="ghost" size="sm" className="h-7 text-xs text-red-500 hover:text-red-600" onClick={(e) => { e.stopPropagation(); setFile(null); }}>Remove file</Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <div className="mx-auto w-10 h-10 rounded-full bg-muted flex items-center justify-center">
+                        <Upload className="w-5 h-5 text-muted-foreground" />
+                      </div>
+                      <div className="text-sm font-semibold">Drop your resume PDF here</div>
+                      <div className="text-xs text-muted-foreground">or click to browse files</div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center"><span className="w-full border-t" /></div>
+                  <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or paste text</span></div>
+                </div>
+
                 <Textarea
                   placeholder="Paste your full resume text here..."
-                  className="min-h-[280px] text-sm font-mono resize-none focus:border-primary"
+                  className="min-h-[120px] text-sm font-mono resize-none focus:border-primary"
                   value={resumeText}
-                  onChange={(e) => setResumeText(e.target.value)}
+                  onChange={(e) => {
+                    setResumeText(e.target.value);
+                    if (e.target.value) setFile(null);
+                  }}
                 />
                 <Button
                   variant="ghost"
                   size="sm"
                   className="text-xs text-muted-foreground hover:text-primary"
-                  onClick={() => { setResumeText(SAMPLE_RESUME); toast.info("Sample resume loaded"); }}
+                  onClick={() => { setResumeText(SAMPLE_RESUME); setFile(null); toast.info("Sample resume loaded"); }}
                 >
                   <Clipboard className="w-3 h-3 mr-1" />
                   Load sample resume

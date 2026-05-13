@@ -43,9 +43,11 @@ export async function updateUser(data) {
       },
       data: {
         industry: data.industry,
-        experience: data.experience,
+        experience: Number(data.experience),
         bio: data.bio,
-        skills: data.skills,
+        skills: typeof data.skills === "string" 
+          ? data.skills.split(",").map(s => s.trim()).filter(Boolean) 
+          : data.skills,
       },
     });
 

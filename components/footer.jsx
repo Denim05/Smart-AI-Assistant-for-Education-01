@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { Linkedin, Twitter, Github, Mail, Sparkles } from "lucide-react";
+import { Linkedin, Twitter, Github, Mail, Sparkles, ArrowRight } from "lucide-react";
 import Logo from "./logo";
+import { Badge } from "./ui/badge";
 
 const footerLinks = {
-  Tools: [
-    { label: "ATS Resume Scorer", href: "/ats-scorer" },
+  "AI Tools": [
+    { label: "ATS Resume Scorer", href: "/ats-scorer", badge: "Popular" },
     { label: "LinkedIn Optimizer", href: "/linkedin-optimizer" },
     { label: "Career Roadmap", href: "/career-roadmap" },
     { label: "Resume Builder", href: "/resume" },
@@ -14,8 +15,8 @@ const footerLinks = {
   ],
   Platform: [
     { label: "Industry Dashboard", href: "/dashboard" },
-    { label: "Job Board", href: "/jobs" },
-    { label: "Onboarding", href: "/onboarding" },
+    { label: "Live Job Board", href: "/jobs", badge: "Live" },
+    { label: "Onboarding Quiz", href: "/onboarding" },
   ],
   Company: [
     { label: "About GENzAI", href: "#" },
@@ -27,34 +28,59 @@ const footerLinks = {
 
 const socialLinks = [
   { icon: <Linkedin className="w-4 h-4" />, href: "#", label: "LinkedIn" },
-  { icon: <Twitter className="w-4 h-4" />, href: "#", label: "Twitter" },
+  { icon: <Twitter className="w-4 h-4" />, href: "#", label: "Twitter/X" },
   { icon: <Github className="w-4 h-4" />, href: "#", label: "GitHub" },
   { icon: <Mail className="w-4 h-4" />, href: "mailto:support@genzai.in", label: "Email" },
 ];
 
+const techStack = ["Google Gemini AI", "Next.js 15", "Clerk Auth", "Prisma", "Inngest"];
+
 export default function Footer() {
   return (
-    <footer className="border-t bg-muted/20">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
-          {/* Brand Column */}
-          <div className="md:col-span-2 space-y-4">
+    <footer className="border-t border-white/5 bg-muted/10 relative overflow-hidden">
+      {/* Subtle orb */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px]
+        rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+
+      <div className="container mx-auto px-4 py-16 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+
+          {/* Brand column */}
+          <div className="lg:col-span-2 space-y-5">
             <Logo className="h-12 w-auto" />
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              The AI-powered career platform for the next generation of professionals. Stop applying blindly. Start landing offers.
+              The AI-powered career platform for the next generation of professionals.
+              Stop applying blindly. Start landing offers.
             </p>
-            <div className="flex items-center gap-1 text-xs text-primary font-semibold">
+
+            {/* Tech stack badges */}
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="text-[10px] font-bold px-2.5 py-1 rounded-full border border-primary/20
+                    bg-primary/5 text-primary/80 uppercase tracking-wider"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-1.5 text-xs text-primary font-bold">
               <Sparkles className="w-3.5 h-3.5" />
               Powered by Google Gemini AI
             </div>
-            {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2">
+
+            {/* Social links */}
+            <div className="flex items-center gap-3">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 rounded-lg border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                  className="w-9 h-9 rounded-xl border border-white/10 flex items-center justify-center
+                    text-muted-foreground hover:text-primary hover:border-primary/40
+                    hover:bg-primary/10 transition-all duration-200 backdrop-blur-sm"
                 >
                   {s.icon}
                 </a>
@@ -62,21 +88,26 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links Columns */}
+          {/* Links columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <p className="font-bold text-sm mb-4 uppercase tracking-wider text-foreground">
+              <p className="font-black text-sm mb-5 uppercase tracking-widest text-foreground">
                 {category}
               </p>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link.label}>
+                  <li key={link.label} className="flex items-center gap-2">
                     <Link
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
                     >
                       {link.label}
                     </Link>
+                    {link.badge && (
+                      <Badge className="text-[9px] h-4 px-1.5 py-0 bg-primary/15 text-primary border-0 font-bold">
+                        {link.badge}
+                      </Badge>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -84,11 +115,11 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        {/* Bottom bar */}
+        <div className="border-t border-white/5 mt-14 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <p>© 2026 GENzAI Technologies. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Built with ❤️ for ambitious Gen Z professionals across India
+          <p className="flex items-center gap-1.5">
+            Built with ❤️ for ambitious Gen Z professionals across India 🇮🇳
           </p>
         </div>
       </div>

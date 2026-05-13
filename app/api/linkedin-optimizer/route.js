@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+import { generateWithFallback, extractJSON } from "@/lib/gemini";
 
 export async function POST(req) {
   const { userId } = await auth();
@@ -45,13 +42,9 @@ Return ONLY a valid JSON object in this exact format. Do NOT wrap it in markdown
 }
 `;
 
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    const match = text.match(/\{[\s\S]*\}|\[[\s\S]*\]/);
-    if (!match) throw new Error("Failed to parse JSON from AI response");
-    const optimized = JSON.parse(match[0]);
-
-    return NextResponse.json({ success: true, optimized });
+    const text = await generateWithFallback(prompt);
+    const data = extractJSON(text);
+    return NextResponse.json({ success: true, optimized: data });
   } catch (error) {
     console.error("LinkedIn optimizer error:", error);
     return NextResponse.json({ error: "Failed to optimize profile" }, { status: 500 });
