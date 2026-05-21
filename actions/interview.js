@@ -93,9 +93,7 @@ export async function saveQuizResult(questions, answers, score) {
     `;
 
     try {
-      const tipResult = await model.generateContent(improvementPrompt);
-
-      improvementTip = tipResult.response.text().trim();
+      improvementTip = await generateWithFallback(improvementPrompt);
       console.log(improvementTip);
     } catch (error) {
       console.error("Error generating improvement tip:", error);
