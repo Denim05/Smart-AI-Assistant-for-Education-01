@@ -8,8 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { ScrollToTop } from "@/components/scroll-to-top";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzai.vercel.app";
-
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzaix.tech";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -41,6 +40,9 @@ export const metadata = {
     images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
+  verification: {
+  google: "InHaaBePQPpiySdP4n1G93GNqsgPMY2l-qX0zdxvH4o",
+},
   icons: { icon: "/logo.svg", apple: "/logo.png" },
 };
 
