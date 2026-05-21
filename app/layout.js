@@ -8,8 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { ScrollToTop } from "@/components/scroll-to-top";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzai.vercel.app";
-
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzaix.tech";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
