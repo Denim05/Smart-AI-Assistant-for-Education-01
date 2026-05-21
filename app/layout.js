@@ -42,7 +42,7 @@ export const metadata = {
   },
   robots: { index: true, follow: true },
   verification: {
-  google: "<meta name="google-site-verification" content="InHaaBePQPpiySdP4n1G93GNqsgPMY2l-qX0zdxvH4o" />",
+  google: "InHaaBePQPpiySdP4n1G93GNqsgPMY2l-qX0zdxvH4o",
 },
   icons: { icon: "/logo.svg", apple: "/logo.png" },
 };
