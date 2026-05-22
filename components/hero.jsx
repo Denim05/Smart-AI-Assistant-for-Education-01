@@ -179,7 +179,7 @@ function AnimatedTerminal({ active }) {
 /* ── Orbital Visual ──────────────────────────────────── */
 function OrbitalUniverse({ active }) {
   return (
-    <div className="relative flex items-center justify-center w-full h-full min-h-[300px]">
+    <div className="relative flex items-center justify-center w-full h-full min-h-[300px] scale-[0.75] sm:scale-[0.9] md:scale-100 origin-center transition-transform">
       {/* Outer rotating ring */}
       <div
         className="absolute rounded-full border border-dashed border-primary/15"

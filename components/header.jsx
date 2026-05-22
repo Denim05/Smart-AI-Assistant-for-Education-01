@@ -14,6 +14,7 @@ import { checkUser } from "@/lib/checkUser";
 import { ThemeToggle } from "./theme-toggle";
 import Logo from "./logo";
 import { Badge } from "./ui/badge";
+import MobileMenu from "./mobile-menu";
 
 const growthTools = [
   {
@@ -99,7 +100,7 @@ export default async function Header() {
         <div className="flex items-center gap-2">
           <SignedIn>
             {/* Dashboard Link */}
-            <Link href="/dashboard" className="hidden sm:flex">
+            <Link href="/dashboard" className="hidden lg:flex">
               <Button variant="ghost" size="sm" className="gap-1.5 text-muted-foreground hover:text-foreground">
                 <LayoutDashboard className="h-4 w-4" />
                 <span className="hidden md:inline">Dashboard</span>
@@ -109,7 +110,7 @@ export default async function Header() {
             {/* Growth Tools Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" className="gap-2 shadow-sm shadow-primary/20">
+                <Button size="sm" className="hidden lg:flex gap-2 shadow-sm shadow-primary/20">
                   <StarsIcon className="h-4 w-4" />
                   <span className="hidden sm:inline">Tools</span>
                   <ChevronDown className="h-3 w-3 opacity-70" />
@@ -161,11 +162,11 @@ export default async function Header() {
 
           <SignedOut>
             <SignInButton mode="modal">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" className="hidden lg:flex">
                 Sign In
               </Button>
             </SignInButton>
-            <Link href="/sign-up" className="hidden sm:flex">
+            <Link href="/sign-up" className="hidden lg:flex">
               <Button size="sm" className="shadow-sm shadow-primary/20">
                 Get Started Free
               </Button>
@@ -173,6 +174,7 @@ export default async function Header() {
           </SignedOut>
 
           <ThemeToggle />
+          <MobileMenu />
         </div>
       </nav>
     </header>

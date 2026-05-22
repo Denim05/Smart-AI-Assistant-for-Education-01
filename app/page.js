@@ -279,7 +279,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="max-w-3xl mx-auto">
-            <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="glass-card rounded-2xl overflow-x-auto">
               <table className="w-full comparison-table">
                 <thead>
                   <tr className="border-b border-white/8">
