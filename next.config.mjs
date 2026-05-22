@@ -16,6 +16,9 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
+  // Ensure native PDF and canvas dependencies are treated as external server packages
+  serverExternalPackages: ["pdf-parse", "@napi-rs/canvas"],
+
   // Silence TypeScript errors that are non-critical during build
   typescript: {
     ignoreBuildErrors: false,
