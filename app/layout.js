@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzaix.tech";
 export const metadata = {
@@ -65,6 +66,7 @@ export default function RootLayout({ children }) {
             <Toaster richColors position="bottom-right" />
             <ScrollToTop />
             <Analytics />
+            <SpeedInsights />
           </ThemeProvider>
         </body>
       </html>
