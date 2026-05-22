@@ -26,6 +26,11 @@ const nextConfig = {
 
   // Security headers for production
   async headers() {
+    const isProduction =
+      process.env.NEXT_PUBLIC_VERCEL_ENV === "production" ||
+      process.env.VERCEL_ENV === "production" ||
+      process.env.NODE_ENV === "production";
+
     return [
       {
         source: "/(.*)",
@@ -37,6 +42,10 @@ const nextConfig = {
           {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "X-Robots-Tag",
+            value: isProduction ? "index, follow" : "noindex, nofollow",
           },
         ],
       },
