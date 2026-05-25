@@ -45,7 +45,7 @@ const nextConfig = {
           },
           {
             key: "X-Robots-Tag",
-            value: isProduction ? "index, follow" : "noindex, nofollow",
+            value: "index, follow",
           },
         ],
       },
