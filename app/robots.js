@@ -18,6 +18,6 @@ export default function robots() {
         "/jobs",
       ],
     },
-    sitemap: "https://genzaix.tech/sitemap.xml",
+    sitemap: "https://www.genzaix.tech/sitemap.xml",
   };
 }

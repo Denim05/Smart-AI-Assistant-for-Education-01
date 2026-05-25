@@ -10,7 +10,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://genzaix.tech";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.genzaix.tech";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -42,6 +42,9 @@ export const metadata = {
     images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
+  alternates: {
+    canonical: "/",
+  },
   verification: {
   google: "InHaaBePQPpiySdP4n1G93GNqsgPMY2l-qX0zdxvH4o",
 },
